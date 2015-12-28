@@ -1,17 +1,12 @@
-#checks if a statement is a pangram
-#uses a boolean array indexed by the alphabet
-#for each character in the statement, that letter is set to true
-#at the end, check if all values are set to true
+from collections import OrderedDict
 
 def is_pangram(statement):
-    letters = [False] * 26 #make a list of 26 (number of letters)
-    for character in statement.lower():
-        index = ord(character) - 97
-        if index >= 0 and index <= 25: #catch for illegal values
-            letters[index] = True #set that letter to true
-    #extract the booleans that are false using a list comprehension
-    #if there are any falses, return false
-    if  not [boolean for boolean in letters if boolean == False]:
-        return True
-    return False
-
+    #iterate through the lower case string and place letters into list_letters
+    list_letters = [char for char in statement.lower() if is_lower(ord(char))]
+    #removes duplicates from list by converting to dictionary and back to list
+    list_letters_removed_duplicates = list(OrderedDict.fromkeys(list_letters))
+    #checks if the list has all the letters in it and returns that result
+    return (len(list_letters_removed_duplicates) == 26)
+def is_lower(ASCII_value):
+    #return if the ASCII_value is in the range of a lowerr
+    return (ASCII_value >= 97 and ASCII_value <= (97 + 25))
